@@ -17,4 +17,4 @@ jobs:
                -d '{
                  "content": "Pull Requestがmainブランチに作成されました。\nタイトル: ${{ github.event.pull_request.title }}\n作成者: ${{ github.event.pull_request.user.login }}\nURL: ${{ github.event.pull_request.html_url }}"
                }' \
-               https://discord.com/api/webhooks/https://discord.com/api/webhooks/1359123939951116288/hkGo0cH63lwwZBb4MWAFpDiaQIOeF8Zjwq3XMJxJdPgkFiq3tEXMDByb8QBqq2B0hxNx
+               https://discord.com/api/webhooks/https://discord.com/api/webhooks/1359123939951116288/hkGo0cH63lwwZBb4MWAFpDiaQIOeF8Zjwq3XMJxJdPgkFiq3tEXMDByb8QBqq2B0hxNx/git
