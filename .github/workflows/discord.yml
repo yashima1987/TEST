@@ -1,23 +1,22 @@
 # .github/workflows/notify-discord-on-pr.yml
-# このワークフローは、mainブランチに対してPull Requestが作成・再オープンされたときにDiscordへ通知する
 
-name: Notify Discord on PR to main  # ワークフローの名前
+name: Notify Discord on PR to main
 
 on:
-  pull_request:  # PRイベントに反応
-    types: [opened, reopened]  # PRが「作成された」または「再オープンされた」時に実行
+  pull_request:
+    types: [opened, reopened]
     branches:
-      - main  # 対象ブランチをmainに限定
+      - main  # 通知したい対象ブランチ
 
 jobs:
   notify:
-    runs-on: ubuntu-latest  # ジョブの実行環境として最新のUbuntuを使用
+    runs-on: ubuntu-latest
     steps:
-      - name: Send PR notification to Discord  # Discordへ通知を送信するステップ
+      - name: Send PR notification to Discord
         run: |
-          curl -H "Content-Type: application/json" \  # JSON形式で送信
-               -X POST \  # POSTメソッドでリクエストを送信
+          curl -H "Content-Type: application/json" \
+               -X POST \
                -d '{
                  "content": "Pull Requestがmainブランチに作成されました。\nタイトル: ${{ github.event.pull_request.title }}\n作成者: ${{ github.event.pull_request.user.login }}\nURL: ${{ github.event.pull_request.html_url }}"
                }' \
-               https://discord.com/api/webhooks/xxxx/yyyy  # 実際のWebhook URLに置き換えてください
+               https://discord.com/api/webhooks/xxxx/yyyy  # あなたのDiscord Webhook URLに差し替え
