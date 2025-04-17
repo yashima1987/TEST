@@ -1,34 +1,20 @@
-
-name: Discord Message Notify
+name: Notify Discord on PR to main
 
 on:
-  push:
-    branches: 
-    - main
-    - dev
   pull_request:
+    types: [opened, reopened]
     branches:
-    - main
-    - dev
+      - main
 
 jobs:
-  notify_discord_of_push:
-    name: Get Commit Message
+  notify:
     runs-on: ubuntu-latest
     steps:
-    - name: Check out repo's head branch
-      uses: actions/checkout@v2.4.0
-      with:
-          ref: ${{ github.head_ref }} #For pull_request events, GITHUB_REF contains the merge branch (refs/pull/:prNumber/merge).
-    - name: Get commit message
-      run: |
-        echo "Commit_Message=$(git log --pretty=oneline --all --abbrev-commit)" >> $GITHUB_ENV
-    - name: Notify discord
-      uses: appleboy/discord-action@0.0.3
-      with:
-        webhook_id: ${{ secrets.WEBHOOK_ID }}
-        webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
-        color: "#48f442"
-        username: "GitHub Bot"
-        args: "${{ github.event_name }} by @${{ github.actor }} \nmessage: ${{ env.Commit_Message }}"
-
+      - name: Send PR notification to Discord
+        run: |
+          curl -H "Content-Type: application/json" \
+               -X POST \
+               -d '{
+                 "content": "Pull Requestがmainブランチに作成されました。\nタイトル: ${{ github.event.pull_request.title }}\n作成者: ${{ github.event.pull_request.user.login }}\nURL: ${{ github.event.pull_request.html_url }}"
+               }' \
+               https://discord.com/api/webhooks/xxxx/yyyy
