@@ -1,22 +1,32 @@
-# .github/workflows/notify-discord-on-pr.yml
-
-name: Notify Discord on PR to main
+name: Discord Message Notify
 
 on:
+  push:
+    branches: 
+    - main
+    - dev
   pull_request:
-    types: [opened, reopened]
     branches:
-      - main  # 通知したい対象ブランチ
+    - main
+    - dev
 
 jobs:
-  notify:
+  notify_discord_of_push:
+    name: Get Commit Message
     runs-on: ubuntu-latest
     steps:
-      - name: Send PR notification to Discord
-        run: |
-          curl -H "Content-Type: application/json" \
-               -X POST \
-               -d '{
-                 "content": "Pull Requestがmainブランチに作成されました。\nタイトル: ${{ github.event.pull_request.title }}\n作成者: ${{ github.event.pull_request.user.login }}\nURL: ${{ github.event.pull_request.html_url }}"
-               }' \
-               https://discord.com/api/webhooks/1359123939951116288/hkGo0cH63lwwZBb4MWAFpDiaQIOeF8Zjwq3XMJxJdPgkFiq3tEXMDByb8QBqq2B0hxNx  # あなたのDiscord Webhook URLに差し替え
+    - name: Check out repo's head branch
+      uses: actions/checkout@v2.4.0
+      with:
+          ref: ${{ github.head_ref }} #For pull_request events, GITHUB_REF contains the merge branch (refs/pull/:prNumber/merge).
+    - name: Get commit message
+      run: |
+        echo "Commit_Message=$(git log --pretty=oneline --all --abbrev-commit)" >> $GITHUB_ENV
+    - name: Notify discord
+      uses: appleboy/discord-action@0.0.3
+      with:
+        webhook_id: ${{ secrets.WEBHOOK_ID }}
+        webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
+        color: "#48f442"
+        username: "GitHub Bot"
+        args: "${{ github.event_name }} by @${{ github.actor }} \nmessage: ${{ env.Commit_Message }}"
