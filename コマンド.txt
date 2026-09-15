@@ -1,56 +1,6 @@
-# 1. Documentsフォルダへ移動
-cd ~/Documents
-
-# 2. もし以前のフォルダが残っているか確認
-ls
-
-# 3. GitHubからiOSプロジェクトを取得
-git clone https://github.com/tw-tc/sfcc-djmob-iOS.git
-
-# 4. 取得したフォルダへ移動
 cd sfcc-djmob-iOS
-
-# 5. masterブランチへ切り替え
 git checkout master
-
-# 6. 現在のブランチ確認
-git branch --show-current
-
-# 7. iOSプロジェクトフォルダへ移動
 cd djm-ios
-
-# 8. Podfileがあるか確認
 ls
 
-# 9. CocoaPodsのバージョン確認
-pod --version
-
-# 10. ライブラリをインストール
 pod install
-
-# 11. Xcode用workspaceができたか確認
-ls
-
-# 12. Xcodeで開く
-open Dospara7.xcworkspace
-
-
-
-
-途中でGitHub認証が出たら、
-
-Username for 'https://github.com':
-
-には、
-
-yashima1987
-
-を入力します。
-
-次に、
-
-Password for 'https://yashima1987@github.com':
-
-
-cd ~/Documents
-git clone https://github.com/tw-tc/sfcc-djmob-iOS.git
