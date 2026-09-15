@@ -50,3 +50,7 @@ yashima1987
 次に、
 
 Password for 'https://yashima1987@github.com':
+
+
+cd ~/Documents
+git clone https://github.com/tw-tc/sfcc-djmob-iOS.git
