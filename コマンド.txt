@@ -1,6 +1,17 @@
-cd sfcc-djmob-iOS
+cd ~/Documents/sfcc-djmob-iOS
 git checkout master
 cd djm-ios
 ls
 
+
+
+Podfile
+Podfile.lock
+Dospara7.xcodeproj
+
+
 pod install
+
+
+
+open Dospara7.xcworkspace
